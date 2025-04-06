@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>616908782782-l8t2rmv008ufa4r0mobca118hjb49j1b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.616908782782-l8t2rmv008ufa4r0mobca118hjb49j1b</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>616908782782-11rjtv9r57qs79bsjc95vn3kos4qrsea.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB1hmTaD13zTP6MSkA8ASkD4WDY8q1jPHE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>616908782782</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.devjo.ghanagermany</string>
+	<key>PROJECT_ID</key>
+	<string>ghana-to-germany</string>
+	<key>STORAGE_BUCKET</key>
+	<string>ghana-to-germany.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:616908782782:ios:576bfeb355d0fc2f45f2ef</string>
+</dict>
+</plist>

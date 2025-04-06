@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "616908782782",
+    "project_id": "ghana-to-germany",
+    "storage_bucket": "ghana-to-germany.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616908782782:android:368e537a9486172a45f2ef",
+        "android_client_info": {
+          "package_name": "com.devjo.ghanagermany"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616908782782-ofljed40alf7ls77139be0ddu8lb59l1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devjo.ghanagermany",
+            "certificate_hash": "edb8e530c6cd138fb91ec848a501d0b3658396f6"
+          }
+        },
+        {
+          "client_id": "616908782782-ioj7d0vds4fnh3eijf9r7tpuenenej67.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzaqiNleksXjtGFW3PpFZQGKdDMLmBPqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "616908782782-ioj7d0vds4fnh3eijf9r7tpuenenej67.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "616908782782-l8t2rmv008ufa4r0mobca118hjb49j1b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devjo.ghanagermany"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
