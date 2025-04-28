@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:ghana_to_germany/Application/Abstractions/Services/IAuthProvider.dart';
 import 'package:ghana_to_germany/Application/Abstractions/Services/IHttpClient.dart';
-import 'dart:developer' as developer;
 
 class ErrorResponse {
   String type, title, traceId;
@@ -81,7 +80,8 @@ class DioHttpClient implements IHttpClient {
   @override
   Future<T> get<T>(String route) async {
     try {
-      var url = "https://stellar-stream.shipeazi.com/api/";
+      var url = "http://140.238.70.213:3000/api/";
+      //var url = "http://localhost:5118/api/";
 
       final response = await dio.get(url + route);
       return _handleResponse<T>(response);
@@ -93,7 +93,9 @@ class DioHttpClient implements IHttpClient {
   @override
   Future<T> post<T>(String route, dynamic payload) async {
     try {
-      var url = "https://stellar-stream.shipeazi.com/api/";
+      var url = "http://140.238.70.213:3000/api/";
+      //var url = "http://localhost:5118/api/";
+
       final response = await dio.post(url + route, data: payload);
       return _handleResponse<T>(response);
     } on DioException catch (e) {

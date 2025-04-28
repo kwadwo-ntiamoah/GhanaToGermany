@@ -58,7 +58,7 @@ class LoginViewModel extends ChangeNotifier with ErrorNotifierMixin {
 
       notifyError(
           e.statusCode == 401 ? "Invalid login credentials" : e.toString());
-    } on ForbiddenException catch (e) {
+    } on ForbiddenException {
       _status = FormStatus.FAILED;
       notifyListeners();
 
@@ -113,6 +113,9 @@ class LoginViewModel extends ChangeNotifier with ErrorNotifierMixin {
   void resetState() {
     _status = FormStatus.INIT;
     _googleStatus = FormStatus.INIT;
+
+    _usernameController.clear();
+    _passwordController.clear();
 
     notifyListeners();
   }

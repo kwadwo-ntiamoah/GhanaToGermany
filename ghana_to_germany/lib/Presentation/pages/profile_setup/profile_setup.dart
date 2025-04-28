@@ -70,7 +70,7 @@ class ProfileSetupScreen extends StatelessWidget {
 }
 
 class _CompleteProfileForm extends StatefulWidget {
-  const _CompleteProfileForm({super.key});
+  const _CompleteProfileForm();
 
   @override
   State<_CompleteProfileForm> createState() => _CompleteProfileFormState();

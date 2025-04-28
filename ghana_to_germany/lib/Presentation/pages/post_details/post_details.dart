@@ -93,7 +93,7 @@ class _PostDetailsScreenState extends State<PostDetailsScreen> {
 class _MainDetailView extends StatelessWidget {
   final Post post;
 
-  const _MainDetailView({super.key, required this.post});
+  const _MainDetailView({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +265,7 @@ class _MainDetailView extends StatelessWidget {
 }
 
 class _CommentsView extends StatelessWidget {
-  const _CommentsView({super.key});
+  const _CommentsView();
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +309,7 @@ class _CommentsView extends StatelessWidget {
 
 class _AddComment extends StatelessWidget {
   final Post post;
-  const _AddComment({super.key, required this.post});
+  const _AddComment({required this.post});
 
   @override
   Widget build(BuildContext context) {
@@ -387,7 +387,7 @@ class _AddComment extends StatelessWidget {
 class _CommentCard extends StatelessWidget {
   final Comment comment;
 
-  const _CommentCard({super.key, required this.comment});
+  const _CommentCard({required this.comment});
 
   @override
   Widget build(BuildContext context) {

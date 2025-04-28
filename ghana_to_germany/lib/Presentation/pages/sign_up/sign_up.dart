@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ghana_to_germany/Application/Abstractions/Services/INavigationService.dart';
 import 'package:ghana_to_germany/Presentation/common/validators.dart';
-import 'package:ghana_to_germany/Presentation/config/service_locator.dart'
-    as sl;
 import 'package:go_router/go_router.dart';
 import 'package:ghana_to_germany/Application/Providers/register.provider.dart';
 import 'package:ghana_to_germany/Application/Providers/shared/form_status.dart';
@@ -13,7 +10,6 @@ import 'package:ghana_to_germany/Presentation/common/page_error_listener.dart';
 import 'package:ghana_to_germany/Presentation/config/router.dart';
 import 'package:ghana_to_germany/Presentation/theme/colors.dart';
 import 'package:provider/provider.dart';
-import 'dart:developer' as developer;
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

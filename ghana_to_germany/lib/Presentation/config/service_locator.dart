@@ -60,23 +60,23 @@ void initServiceLocator(SharedPreferences sharedPreferences) {
     ..registerSingleton<ITranslateRepository>(
         TranslateRepository(httpClient: getIt()))
     // ============ USE CASES ==============
-    ..registerSingleton<LoginUseCase>(
+    ..registerFactory<LoginUseCase>(() =>
         LoginUseCase(authRepository: getIt(), authProvider: getIt()))
     ..registerSingleton<LogoutUseCase>(
         LogoutUseCase(authRepository: getIt(), authProvider: getIt()))
-    ..registerSingleton<RegisterUseCase>(
+    ..registerFactory<RegisterUseCase>(() =>
         RegisterUseCase(authRepository: getIt(), authProvider: getIt()))
-    ..registerSingleton<SocialRegisterUseCase>(
+    ..registerFactory<SocialRegisterUseCase>(() =>
         SocialRegisterUseCase(authRepository: getIt(), authProvider: getIt()))
     ..registerSingleton<GetPostsUseCase>(
         GetPostsUseCase(postRepository: getIt()))
-    ..registerSingleton<AddPostUseCase>(AddPostUseCase(postRepository: getIt()))
+    ..registerFactory<AddPostUseCase>(() => AddPostUseCase(postRepository: getIt()))
     ..registerSingleton<LikePostUseCase>(
         LikePostUseCase(postRepository: getIt()))
     ..registerSingleton<GetTagsUseCase>(GetTagsUseCase(postRepository: getIt()))
     ..registerSingleton<GetWikisUseCase>(
         GetWikisUseCase(postRepository: getIt()))
-    ..registerSingleton<AddWikiUseCase>(AddWikiUseCase(postRepository: getIt()))
+    ..registerFactory<AddWikiUseCase>(() => AddWikiUseCase(postRepository: getIt()))
     ..registerSingleton<GetNewsUseCase>(GetNewsUseCase(postRepository: getIt()))
     ..registerSingleton<TranslateTextUseCase>(
         TranslateTextUseCase(translateRepository: getIt()))
@@ -85,7 +85,7 @@ void initServiceLocator(SharedPreferences sharedPreferences) {
         AddCommentUseCase(postRepository: getIt()))
     ..registerSingleton<GetCommentsUseCase>(
         GetCommentsUseCase(postRepository: getIt()))
-    ..registerSingleton<CompleteProfileUseCase>(
+    ..registerFactory<CompleteProfileUseCase>(() =>
         CompleteProfileUseCase(authRepository: getIt()))
     ..registerSingleton<GetProfileUseCase>(
         GetProfileUseCase(authRepository: getIt()))

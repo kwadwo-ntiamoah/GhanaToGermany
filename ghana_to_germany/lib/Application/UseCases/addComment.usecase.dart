@@ -1,6 +1,5 @@
 import 'package:ghana_to_germany/Application/Abstractions/Repositories/IPostRepository.dart';
 import 'package:ghana_to_germany/Application/UseCases/_usecase.dart';
-import 'package:ghana_to_germany/Domain/Post/post.dart';
 
 class AddCommentUseCase extends UseCase<AddCommentPayload, void> {
   final IPostRepository postRepository;

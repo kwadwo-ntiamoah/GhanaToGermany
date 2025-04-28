@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ghana_to_germany/Application/Providers/login.provider.dart';
-import 'package:ghana_to_germany/Application/Providers/register.provider.dart';
 import 'package:ghana_to_germany/Application/Providers/shared/form_status.dart';
 import 'package:ghana_to_germany/Presentation/assets/assets.dart';
 import 'package:ghana_to_germany/Presentation/common/button.dart';
@@ -13,6 +12,8 @@ import 'package:ghana_to_germany/Presentation/config/router.dart';
 import 'package:ghana_to_germany/Presentation/theme/colors.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../../config/service_locator.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -99,13 +100,22 @@ class _LoginFormState extends State<LoginForm> {
     return Consumer<LoginViewModel>(builder: (context, state, _) {
       if (state.status == FormStatus.SUCCESSFUL ||
           state.googleStatus == FormStatus.SUCCESSFUL) {
-        context.go(AppRoutes.landing);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          context.go(AppRoutes.landing);
+
+          // delay resetting state for a second
+          // this prevents navigation from cancelling
+          Future.delayed(const Duration(seconds: 1), () {
+            state.resetState();
+          });
+        });
       }
 
       return Column(
         children: [
           Text("Sign In", style: Theme.of(context).textTheme.displayLarge),
-          Text("Login to continue", style: Theme.of(context).textTheme.bodyLarge),
+          Text("Login to continue",
+              style: Theme.of(context).textTheme.bodyLarge),
           SizedBox(height: MediaQuery.of(context).size.height * .025),
           Form(
             key: _formKey,
@@ -149,7 +159,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: AppColors.secondary,
                   isLoading: state.status == FormStatus.LOADING,
                   onPressed: () =>
-                  _formKey.currentState!.validate() ? state.login() : () {},
+                      _formKey.currentState!.validate() ? state.login() : () {},
                 ),
               ],
             ),

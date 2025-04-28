@@ -7,7 +7,6 @@ import 'package:ghana_to_germany/Application/Providers/posts.provider.dart';
 import 'package:ghana_to_germany/Application/Providers/profile.provider.dart';
 import 'package:ghana_to_germany/Application/Providers/tags.provider.dart';
 import 'package:ghana_to_germany/Application/Providers/wikis.provider.dart';
-import 'package:ghana_to_germany/Domain/Profile/profile.dart';
 import 'package:ghana_to_germany/Presentation/config/router.dart';
 import 'package:ghana_to_germany/Presentation/config/service_locator.dart'
     as sl;
