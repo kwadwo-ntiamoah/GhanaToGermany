@@ -1,0 +1,21 @@
+@page "/dashboard"
+@using UI.Pages.Dashboard.Components
+@attribute [Authorize]
+
+<p class="text-2xl font-bold my-4">Dashboard</p>
+
+<div class="flex flex-col space-y-5">
+    <DashboardCards />
+    <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-1">
+            <h2 class="text-xl font-bold">Top Users</h2>
+            <PieChart />
+        </div>
+        <div class="col-span-1">
+            <h2 class="text-xl font-bold">Top Posts</h2>
+            <PieChart />
+        </div>
+
+    </div>
+    <RecentPosts />
+</div>

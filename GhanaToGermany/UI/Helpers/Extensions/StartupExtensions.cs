@@ -6,24 +6,27 @@ public static class StartupExtensions
 {
     public static IServiceCollection AddCustomAuthentication(this IServiceCollection services)
     {
-        services.AddSingleton<AuthenticationStateProvider>(provider => provider.GetRequiredService<CookieAuthStateProvider>());
-        services.AddSingleton<CookieAuthStateProvider>();
+        // services.AddSingleton<AuthenticationStateProvider>(provider => provider.GetRequiredService<CookieAuthStateProvider>());
+        // services.AddSingleton<CookieAuthStateProvider>();
         services.AddAuthorizationCore();
+
+        services.AddScoped<CookieAuthStateProvider>();
+        services.AddScoped<AuthenticationStateProvider>(sp => sp.GetRequiredService<CookieAuthStateProvider>());
 
         return services;
     }
 
     public static IServiceCollection AddBaseHttpClient(this IServiceCollection services, string baseAddress)
     {
-        services.AddScoped(provider => new CookieAuthenticationHandler(provider.GetRequiredService<CookieAuthStateProvider>()));             
+        // Register the default HttpClient for Blazor WebAssembly
+        services.AddScoped(sp => new HttpClient
+        {
+            BaseAddress = new Uri(baseAddress),
+            Timeout = TimeSpan.FromMinutes(10)
+        });
 
-        services.AddHttpClient("GhanaToGermany.Server", client => 
-        { 
-            client.BaseAddress = new Uri(baseAddress);
-            client.Timeout = TimeSpan.FromMinutes(10);
-        }).AddHttpMessageHandler<CookieAuthenticationHandler>();
-
-        services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("GhanaToGermany.Server"));
+        // Register ICustomHttpClient
+        services.AddScoped<ICustomHttpClient, CustomHttpClient>();
 
         return services;
     }

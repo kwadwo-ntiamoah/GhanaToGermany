@@ -12,7 +12,7 @@ public class CookieAuthenticationHandler(CookieAuthStateProvider authStateProvid
 
         if (result.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
-            authStateProvider.LogOut();
+            await authStateProvider.Logout();
         }
 
         return result;

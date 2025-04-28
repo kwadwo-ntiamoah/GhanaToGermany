@@ -4,6 +4,7 @@ using Api.Application.Abstraction.Persistence;
 using Api.Application.Common.Abstraction.Persistence;
 using Api.Application.Common.Abstraction.Services;
 using Api.Domain;
+using Api.Helpers.Utilities;
 using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Services;
@@ -63,10 +64,12 @@ namespace Api.Helpers.Extensions
             {   
                 options.Cookie.Name = "Asp.Net.Cookie.GhanaToGermany";
                 options.Cookie.HttpOnly = true;
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.SlidingExpiration = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-                options.LoginPath = "/login";
-                options.AccessDeniedPath = "/login";
+                options.LoginPath = "/";
+                options.AccessDeniedPath = "/";
                 options.Events.OnRedirectToLogin = context =>
                 {
                     context.Response.Headers.Location = context.RedirectUri;
@@ -74,6 +77,12 @@ namespace Api.Helpers.Extensions
                     return Task.CompletedTask;
                 };
             });
+
+            services.Configure<SecurityStampValidatorOptions>(options =>
+            {
+                options.ValidationInterval = TimeSpan.FromSeconds(5);
+            });
+
 
             return services;
         }

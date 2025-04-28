@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Api.Application.Profiles.Commands;
 using Api.Application.Profiles.Queries;
 using MediatR;
@@ -12,7 +13,10 @@ namespace Api.Controllers
     {
         [HttpGet]
         public async Task<IActionResult> GetProfileAsync() {
-            var query = new GetProfileQuery();
+            // Get current user
+            var userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
+            var query = new GetProfileQuery(userId);
             var result = await mediatR.Send(query);
 
             return result.Match(Ok, Problem);

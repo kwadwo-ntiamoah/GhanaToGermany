@@ -17,8 +17,7 @@ public class CustomUserClaimsPrincipalFactory(
 
         var roles = await UserManager.GetRolesAsync(user);
 
-        identity.AddClaim(new Claim("Email", user.Email!));           
-        identity.AddClaim(new Claim("UserId", user.Id));
+        identity.AddClaim(new Claim(ClaimTypes.Email, user.Email!));      
         identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
         foreach (var role in roles)

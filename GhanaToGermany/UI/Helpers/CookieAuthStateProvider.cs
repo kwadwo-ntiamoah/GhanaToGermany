@@ -1,81 +1,70 @@
 using System.Net.Http.Json;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components.Authorization;
+using Shared.Auth;
+using Shared.Profile;
 
 namespace UI.Helpers;
 
-public class CookieAuthStateProvider(IHttpClientFactory httpClientFactory) : AuthenticationStateProvider
-{
-        private static readonly AuthenticationState NotAuthenticatedState = new AuthenticationState(new ClaimsPrincipal());
-
-        private ClaimsPrincipal _claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity());
-        private string? _userInfo;
-
-        private AuthenticationState GetState()
-        {
-            return _userInfo != null ? new AuthenticationState(_claimsPrincipal) : NotAuthenticatedState;
-        }
-
-
-        public void Login(string fullName)
-        {
-            _userInfo = fullName;
-
-            //var principal = JwtSerialize.Deserialize(jwt);
-            var claims = new List<Claim> {
-                        new Claim(ClaimTypes.NameIdentifier, _userInfo)};
-                        // new Claim(ClaimTypes.Name, _userInfo.UserName),
-                        // new Claim("UserId", _userInfo.Email),
-                        // new Claim("FullName", _userInfo.FullName)};
-
-            // if (_userInfo.Roles.Any())
-            //     claims.AddRange(_userInfo.Roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
-
-            var identity = new ClaimsIdentity(claims, "AuthCookie");
-
-            _claimsPrincipal = new ClaimsPrincipal(identity);
-
-            NotifyAuthenticationStateChanged(Task.FromResult(GetState()));
-        }
-
-
-
-
+public class CookieAuthStateProvider(HttpClient client) : AuthenticationStateProvider
+    {
+        private ClaimsPrincipal _claimsPrincipal = new(new ClaimsIdentity());
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            if (_userInfo != null) return new AuthenticationState(_claimsPrincipal);
-            
-            var client = httpClientFactory.CreateClient("GhanaToGermany.Server");
-            var response = await client.GetAsync("/api/Auth/profile");
-
-            if (!response.IsSuccessStatusCode) return new AuthenticationState(_claimsPrincipal);
-            
-            _userInfo = await response.Content.ReadFromJsonAsync<string>();
-
-            var claims = new List<Claim>
+            try
             {
-                new Claim(ClaimTypes.NameIdentifier, _userInfo!)
-            };
-                // new Claim(ClaimTypes.Name, _userInfo.UserName),
-                // new Claim("UserId", _userInfo.Email),
-                // new Claim("FullName", _userInfo.FullName)};
+                var response = await client.GetAsync("api/auth/profile");
 
-            // if (_userInfo.Roles.Any())
-            //     claims.AddRange(_userInfo.Roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+                if (response.IsSuccessStatusCode)
+                {
+                    // assign content of profile to claims
+                    var jsonObj = await response.Content.ReadFromJsonAsync<ProfileResponse>();
+                    if (jsonObj == null) return new AuthenticationState(_claimsPrincipal);
 
-            var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    var claims = new List<Claim>
+                    {
+                        new(ClaimTypes.Name, jsonObj.FullName),
+                        new(ClaimTypes.Email, jsonObj.Email),
+                        new("Nickname", jsonObj.Nickname),
+                        new("ProfilePhoto", jsonObj.ProfilePhoto),
+                    };
 
-            _claimsPrincipal = new ClaimsPrincipal(identity);
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    _claimsPrincipal = new ClaimsPrincipal(identity);
 
-            NotifyAuthenticationStateChanged(Task.FromResult(GetState()));
-            return new AuthenticationState(_claimsPrincipal);
+                    NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_claimsPrincipal)));
+                }
+
+                return new AuthenticationState(_claimsPrincipal);
+            }
+            catch (Exception)
+            {
+                return new AuthenticationState(_claimsPrincipal);
+            }
         }
 
-        public void LogOut()
+        public void Login(ProfileResponse user)
         {
-            _userInfo = null;
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, user.FullName),
+                new(ClaimTypes.Email, user.Email),
+                new("Nickname", user.Nickname),
+                new("ProfilePhoto", user.ProfilePhoto),
+            };
+
+            var identity = new ClaimsIdentity(claims, "AuthCookie");
+            _claimsPrincipal = new ClaimsPrincipal(identity);
+
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_claimsPrincipal)));
+        }
+
+        public async Task Logout()
+        {
+            await client.PostAsync("api/auth/logout", null);
+
             _claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity());
-            NotifyAuthenticationStateChanged(Task.FromResult(GetState()));
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(_claimsPrincipal)));
         }
     }

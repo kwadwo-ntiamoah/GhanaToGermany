@@ -8,7 +8,6 @@ nupkg/
 # remove output folder
 # Ignore the following files and folders
 ./Output
-./PlayGround
 
 # Visual Studio Code
 .vscode/*
